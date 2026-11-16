@@ -109,6 +109,26 @@ void render(UINT32 *base, UINT8 buffer, Model *model)
 		render_end_screen(base, "Game Over", 9, "Doug was booed off stage", 24, model->meter.score);
 }
 
+
+/* ==== Function: render_menu ====
+PURPOSE: Renders the menu / splash screen
+
+INPUT: base(UINT32 *): Pointer to frame buffer
+
+OUTPUT: N/A
+*/
+void render_menu(UINT32 *base){
+	
+	char * one_player= "1 Player";
+	char * m_exit = "exit";
+
+	clear_screen(base);
+	plot_20l_bitmap(base, 0, bg, BG_HEIGHT);
+	plot_xstring(base, 340, 75, one_player, 2);
+	plot_xstring(base, 340, 400, m_exit, 2);
+
+}
+
 /* ==== Function: render_staff ====
 PURPOSE: Renders one four line staff.
 

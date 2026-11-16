@@ -133,18 +133,10 @@ bool display_menu(){
 	
 	bool play;
 	UINT32 * base;
-	char * one_player, * m_exit;
 	char c;
-
-	one_player = "1 Player";
-	m_exit = "exit";
 
 	base = get_pbase();
 
-	clear_screen(base);
-	plot_20l_bitmap(base, 0, bg, BG_HEIGHT);
-	plot_xstring(base, 340, 75, one_player, 2);
-	plot_xstring(base, 340, 400, m_exit, 2);
 	c=get_input();
 	if(c=='a') play=true;
 	else if(c=='d') play=false;

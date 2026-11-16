@@ -35,6 +35,16 @@ OUTPUT: N/A
 */
 void render(UINT32 *base, UINT8 buffer, Model *model);
 
+/* ==== Function: render_menu ====
+PURPOSE: Renders the menu.
+
+INPUT: base(UINT32 *): Pointer to frame buffer
+
+OUTPUT: N/A
+*/
+
+void render_menu(UINT32 *base);
+
 /* ==== Function: render_staff ====
 PURPOSE: Renders one four line staff.
 
@@ -42,6 +52,7 @@ INPUT: base(UINT32 *): Pointer to frame buffer
 
 OUTPUT: N/A
 */
+
 void render_staff(UINT32 *base);
 
 /* ==== Function: clean_staff ====
