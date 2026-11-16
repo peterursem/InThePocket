@@ -24,6 +24,7 @@
 #include "events/events.h"
 #include "song/song.h"
 #include "raster/raster.h"
+#include "bitmaps/bitmaps.h"
 
 void main_init_buffers(UINT32 *buffers[2]);
 void play_game();
@@ -140,7 +141,8 @@ bool display_menu(){
 	base = get_pbase();
 
 	
-	clear_screen(base);
+	render_staff(base);
+	plot_20l_bitmap(base, 0, bg, BG_HEIGHT);
 	plot_xstring(base, 340, 75, one_player, 2);
 	plot_xstring(base, 340, 400, m_exit, 2);
 	c=get_input();
