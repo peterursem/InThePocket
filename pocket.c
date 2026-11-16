@@ -136,7 +136,7 @@ bool display_menu(){
 	char c;
 
 	base = get_pbase();
-
+	render_menu(base);
 	c=get_input();
 	if(c=='a') play=true;
 	else if(c=='d') play=false;

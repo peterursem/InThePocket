@@ -124,7 +124,9 @@ void render_menu(UINT32 *base){
 
 	clear_screen(base);
 	plot_20l_bitmap(base, 0, bg, BG_HEIGHT);
+	plot_rectangle(base,335,70,35,275);
 	plot_xstring(base, 340, 75, one_player, 2);
+	plot_rectangle(base,335,395,35,175);
 	plot_xstring(base, 340, 400, m_exit, 2);
 
 }
