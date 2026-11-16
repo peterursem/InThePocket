@@ -23,11 +23,14 @@
 #include "system/input.h"
 #include "events/events.h"
 #include "song/song.h"
+#include "raster/raster.h"
 
 void main_init_buffers(UINT32 *buffers[2]);
+void play_game();
+bool display_menu();
 
-/* ==== Function: cond_game_over ====
-PURPOSE: Main game setup and loop
+/* ==== Function: main ====
+PURPOSE: main program loop
 
 INPUT: N/A
 
@@ -35,6 +38,39 @@ OUTPUT: N/A
 */
 int main()
 {
+	if(display_menu())
+		play_game();
+	
+	return 0;
+
+}
+
+/* ==== Function: main_init_buffers ====
+PURPOSE: Initialize the buffer pointer array and disable cursor flash
+
+INPUT: (UINT32 *[2]) Pointer to array of 2 buffer pointers
+
+OUTPUT: N/A
+*/
+void main_init_buffers(UINT32 *buffers[2])
+{
+	/* Stop OS cursor blink */
+	disable_cursor();
+	/* Initialize buffer pointers */
+	buffers[0] = get_pbase();
+	buffers[1] = buff_256();
+}
+
+/* ==== Function: play_game ====
+PURPOSE: Plays In the Pocket.
+
+INPUT: N/A
+
+OUTPUT: N/A
+*/
+
+void play_game(){
+
 	UINT32 time_then, time_now, time_flip;
 	Model model;
 	UINT32 *buffers[2];
@@ -81,22 +117,36 @@ int main()
 
 	render(buffers[0], &model);
 	set_screen(buffers[0]);
-
-	return 0;
 }
 
-/* ==== Function: main_init_buffers ====
-PURPOSE: Initialize the buffer pointer array and disable cursor flash
+/* ==== Function: display_menu ====
+PURPOSE: Displays splash screen / main menu.
 
-INPUT: (UINT32 *[2]) Pointer to array of 2 buffer pointers
+INPUT: N/A
 
 OUTPUT: N/A
 */
-void main_init_buffers(UINT32 *buffers[2])
-{
-	/* Stop OS cursor blink */
-	disable_cursor();
-	/* Initialize buffer pointers */
-	buffers[0] = get_pbase();
-	buffers[1] = buff_256();
+
+bool display_menu(){
+	
+	bool play;
+	UINT32 * base;
+	char * one_player, * m_exit;
+	char c;
+
+	one_player = "1 Player";
+	m_exit = "exit";
+
+	base = get_pbase();
+
+	
+	clear_screen(base);
+	plot_xstring(base, 340, 75, one_player, 2);
+	plot_xstring(base, 340, 400, m_exit, 2);
+	c=get_input();
+	if(c=='a') play=true;
+	else if(c=='d') play=false;
+	
+
+	return play;
 }
