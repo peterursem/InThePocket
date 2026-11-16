@@ -9,7 +9,7 @@
 	Steve Kalmar
 
 	In the Pocket - Checkpoint 3
-	Due: Nov 9, 2026
+	Due: Nov 13, 2026
 
 	The main game module for In the Pocket.
 	This module will orchestrate the main game loop using submodule functions.
@@ -31,7 +31,7 @@ void play_game();
 bool display_menu();
 
 /* ==== Function: main ====
-PURPOSE: main program loop
+PURPOSE: Main game setup and loop
 
 INPUT: N/A
 
@@ -82,7 +82,8 @@ void play_game(){
 	model_init(&model, song, SONG_NOTES, time_then);
 
 	main_init_buffers(buffers);
-	render(buffers[1], &model);
+	render(buffers[0], 0, &model);
+	render(buffers[1], 1, &model);
 
 	time_then = get_time();
 
@@ -110,13 +111,13 @@ void play_game(){
 		}
 		else if (render_ready && (time_now > time_flip))
 		{
-			render(buffers[buffer], &model); /* Render to back buffer */
+			render(buffers[buffer], buffer, &model); /* Render to back buffer */
 			time_then = get_time();
 			render_ready = false; /* No longer ready to render */
 		}
 	}
 
-	render(buffers[0], &model);
+	render(buffers[0], 0, &model);
 	set_screen(buffers[0]);
 }
 

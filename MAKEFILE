@@ -6,6 +6,7 @@ model: tstmodel.tos
 render: tstrend.tos
 raster: tstrast.tos
 live: tstlive.tos
+input: tstinput.tos
 
 # ==== SYSTEM CALLS ====
 # No ext dependencies
@@ -55,10 +56,13 @@ build\targets.o: bitmaps\targets.c bitmaps\bitmaps.h types.h
 
 # ==== RASTER OBJECTS ====
 # No ext dependencies
-RASTER =	raster\rast_asm.o raster\bitmap.o raster\fill.o raster\fonts.o raster\string.o
+RASTER =	raster\rast_asm.o raster\rast_ext.o raster\bitmap.o raster\fill.o raster\fonts.o raster\string.o
 
 raster\rast_asm.o: raster\rast_asm.s
 	gen -D -L2 raster\rast_asm.s
+
+raster\rast_ext.o: raster\rast_ext.s
+	gen -D -L2 raster\rast_ext.s
 
 raster\bitmap.o: raster\bitmap.s
 	gen -D -L2 raster\bitmap.s
@@ -95,6 +99,12 @@ build\pocket.o: pocket.c
 	cc68x -g -c pocket.c -o build\pocket.o
 
 # ==== MODEL/EVENT TESTS ====
+tstinput.tos:  build\input.o build\tstinput.o
+	cc68x -g build\input.o build\tstinput.o -o tstinput.tos
+
+build\tstinput.o: system\tstinput.c
+	cc68x -g -c system\tstinput.c -o build\tstinput.o
+
 tstmodel.tos: $(EVENTS) $(MODEL) build\tstmodel.o
 	cc68x -g $(EVENTS) $(MODEL) build\tstmodel.o -o tstmodel.tos
 
@@ -105,14 +115,8 @@ build\tstmodel.o: model\tstmodel.c $(EVENTS_H) $(MODEL_H) types.h
 tstrend.tos: build\tstrend.o build\render.o $(BITMAPS) $(EVENTS) $(MODEL) $(RASTER)
 	cc68x -g build\tstrend.o build\render.o $(BITMAPS) $(EVENTS) $(MODEL) $(RASTER) -o tstrend.tos
 
-tstlive.tos: build\tstlive.o build\render.o $(BITMAPS) $(EVENTS) $(MODEL) $(RASTER)
-	cc68x -g build\tstlive.o build\render.o $(BITMAPS) $(EVENTS) $(MODEL) $(RASTER) -o tstlive.tos
-
 build\tstrend.o: render\tstrend.c render\render.h raster\raster.h $(EVENTS_H) $(MODEL_H) types.h
 	cc68x -g -c render\tstrend.c -o build\tstrend.o
-
-build\tstlive.o: render\tstlive.c render\render.h raster\raster.h $(EVENTS_H) $(MODEL_H) types.h
-	cc68x -g -c render\tstlive.c -o build\tstlive.o
 
 # ==== RASTER TESTS ====
 
