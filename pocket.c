@@ -140,8 +140,7 @@ bool display_menu(){
 
 	base = get_pbase();
 
-	
-	render_staff(base);
+	clear_screen(base);
 	plot_20l_bitmap(base, 0, bg, BG_HEIGHT);
 	plot_xstring(base, 340, 75, one_player, 2);
 	plot_xstring(base, 340, 400, m_exit, 2);
