@@ -1,13 +1,30 @@
-
+music: music.tos
 test: sound.tos
 
-SOUND =	psg.o
+SOUND =	psg.o psg_asm.o
 
 psg.o: psg.c psg.h
 	cc68x -g -c psg.c -o psg.o
+
+psg_asm.o: psg_asm.s psg.h
+	gen -D -L2 psg_asm.s
 
 psgtst.o: psgtst.c psg.h
 	cc68x -g -c psgtst.c -o psgtst.o
 
 sound.tos: $(SOUND) psgtst.o
 	cc68x -g psgtst.o $(SOUND) -o sound.tos
+
+MUSIC = music.o track.o
+
+music.o: music.c music.h
+	cc68x -g -c music.c -o music.o
+
+track.o: track.c track.h
+	cc68x -g -c track.c -o track.o
+
+musictst.o: musictst.c
+	cc68x -g -c musictst.c -o musictst.o
+
+music.tos: $(SOUND) $(MUSIC) musictst.o
+	cc68x -g $(SOUND) $(MUSIC) musictst.o -o music.tos

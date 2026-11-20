@@ -7,53 +7,6 @@
 #define ENV_PERIOD_REG 0xB
 #define ENV_SHAPE_REG 0xD
 
-/* ==== Function: read_psg ====
-Purpose: Attempts to read a value from the given PSG register (0-15). This is a helper
-         routine that will be helpful to test the other routines in this module.
-
-Input: Register(UINT8) - The register that is being read from
-       Value(UINT8&) - The value that was read from the register
-                       Value is valid, if and only if the output is true
-
-Output: Boolean indicating if a value was successfully read or not
-*/
-bool read_psg(UINT8 reg, UINT8 *value)
-{
-	long exit;
-
-	if (reg & 0xF0) return false; /* Reject out of bounds read */
-
-	exit = Super(0); /* Save old super sp */
-	*(volatile char *)(0xFF8800) = reg; /* Select register */
-	*value = *(volatile char *)0xFF8802; /* Get value */
-	Super(exit);
-	
-	return true;
-}
-
-/* ==== Function: write_psg ====
-Purpose: Writes the given byte value (0-255) to the given PSG register (0-15). This is a helper
-         routine to be used by the other functions in this module.
-
-Input: Register(UINT8) - Register that is being written to
-       Value(UINT8) - Value being written to reg
-
-Output: None
-*/
-void write_psg(UINT8 reg, UINT8 val)
-{
-	long exit;
-
-	if (reg & 0xF0) return; /* Reject out of bounds read */
-
-	exit = Super(0); /* Save old super sp */
-
-	*(volatile char *)(0xFF8800) = reg; /* Select register */
-	*(volatile char *)(0xFF8802) = val; /* Set value */
-
-	Super(exit);
-}
-
 /* ==== Function: set_tone ====
 Purpose: Loads the tone registers (coarse and fine) for the given channel (0=A, 1=B, 2=C)
          with the given {12-bit} tuning.

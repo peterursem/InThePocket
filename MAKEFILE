@@ -89,11 +89,29 @@ SONG = build\song.o
 build\song.o: song\song.c song\song.h
 	cc68x -g -c song\song.c -o build\song.o
 
+# ==== SOUND OBJECTS ====
+SOUND =	build\psg.o sound\psg_asm.o
+
+build\psg.o: sound\psg.c sound\psg.h
+	cc68x -g -c sound\psg.c -o build\psg.o
+
+sound\psg_asm.o: sound\psg_asm.s sound\psg.h
+	gen -D -L2 sound\psg_asm.s
+
+# ==== MUSIC OBJECTS ====
+MUSIC = build\music.o build\track.o
+
+build\music.o: sound\music.c sound\music.h
+	cc68x -g -c sound\music.c -o build\music.o
+
+build\track.o: sound\track.c sound\track.h
+	cc68x -g -c sound\track.c -o build\track.o
+
 # ==== GAME MODULE ====
 # Builds all objects (except tests)
 
-pocket.tos: build\pocket.o $(MODEL) $(EVENTS) $(RASTER) $(BITMAPS) $(RENDER) $(SYSTEM) $(SONG)
-	cc68x -g build\pocket.o $(MODEL) $(EVENTS) $(RASTER) $(BITMAPS) $(RENDER) $(SYSTEM) $(SONG) -o pocket.tos
+pocket.tos: build\pocket.o $(MODEL) $(EVENTS) $(RASTER) $(BITMAPS) $(RENDER) $(SYSTEM) $(SONG) $(SOUND) $(MUSIC)
+	cc68x -g build\pocket.o $(MODEL) $(EVENTS) $(RASTER) $(BITMAPS) $(RENDER) $(SYSTEM) $(SONG) $(SOUND) $(MUSIC) -o pocket.tos
 
 build\pocket.o: pocket.c
 	cc68x -g -c pocket.c -o build\pocket.o

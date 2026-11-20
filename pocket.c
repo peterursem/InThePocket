@@ -23,6 +23,8 @@
 #include "system/input.h"
 #include "events/events.h"
 #include "song/song.h"
+#include "sound/music.h"
+#include "sound/track.c"
 
 void main_init_buffers(UINT32 *buffers[2]);
 
@@ -48,6 +50,8 @@ int main()
 	render(buffers[0], 0, &model);
 	render(buffers[1], 1, &model);
 
+	init_music(track);
+
 	time_then = get_time();
 
 	quit = false;
@@ -65,6 +69,8 @@ int main()
 			cond_check_key_buffer(&model); /* Apply key hit/misses */
 			cond_check_misses(&model); /* Apply passed note misses */
 			quit = cond_game_over(&model);
+
+			update_music(model.last_interval);
 
 			set_screen(buffers[buffer]); /* Show previous back buffer */
 			buffer = 1 - buffer; /* Swap back buffer index */
