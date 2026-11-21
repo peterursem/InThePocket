@@ -37,7 +37,6 @@ void update_music(UINT32 time_elapsed)
 			}
 
 			music_update_regs(mod);
-			time_elapsed--; /* Count down the one frame used */
 		}
 		else
 		{	/* Delay track frame */

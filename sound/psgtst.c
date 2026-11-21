@@ -17,20 +17,20 @@ note s / frame s = frame wait
 #define EIGHTH_TIME 20 /* Frame wait for an eighth note (2100/BPM) */
 #define SIXTEENTH_TIME 10 /* Frame wait for an eighth note (1050/BPM) */
 
-#define TONE_LO_E 01247
-#define TONE_LO_F 01201
-#define TONE_LO_G 01073
-#define TONE_LO_A 00774
-#define TONE_LO_B 00705
-#define TONE_LO_C 00654
-#define TONE_LO_D 00575
-#define TONE_HI_E 00523
-#define TONE_HI_F 00500
-#define TONE_HI_FS 00456
-#define TONE_HI_G 00435
-#define TONE_HI_A 00376
-#define TONE_HI_B 00342
-#define TONE_HI_C 00326
+#define TONE_E4 01247
+#define TONE_F4 01201
+#define TONE_G4 01073
+#define TONE_A4 00774
+#define TONE_B4 00705
+#define TONE_C5 00654
+#define TONE_D5 00575
+#define TONE_E5 00523
+#define TONE_F5 00500
+#define TONE_FS5 00456
+#define TONE_G5 00435
+#define TONE_A5 00376
+#define TONE_B5 00342
+#define TONE_C6 00326
 #define TONE_HI_D 00276
 
 void sync_wait(int syncs) 
@@ -54,121 +54,121 @@ int main()
     */
 
     /* A */
-    set_tone(0, TONE_HI_A);
+    set_tone(0, TONE_A5);
     set_volume(0, 15);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_HI_G);
+    set_tone(0, TONE_G5);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_HI_A);
+    set_tone(0, TONE_A5);
     sync_wait(SIXTEENTH_TIME);
     set_volume(0, 0);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_HI_E);
+    set_tone(0, TONE_E5);
     set_volume(0, 15);
     sync_wait(EIGHTH_TIME);
-    set_tone(0, TONE_LO_D);
+    set_tone(0, TONE_D5);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_LO_C);
+    set_tone(0, TONE_C5);
     sync_wait(SIXTEENTH_TIME - 1);
     set_volume(0, 0);
     sync_wait(2);
     set_volume(0, 15);
     sync_wait(SIXTEENTH_TIME - 1);
-    set_tone(0, TONE_LO_D);
+    set_tone(0, TONE_D5);
     sync_wait(SIXTEENTH_TIME);
     set_volume(0, 0);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_LO_A);
+    set_tone(0, TONE_A4);
     set_volume(0, 15);
     sync_wait(SIXTEENTH_TIME + EIGHTH_TIME);
-    set_tone(0, TONE_LO_C);
+    set_tone(0, TONE_C5);
     sync_wait(EIGHTH_TIME);
     set_volume(0, 0);
     sync_wait(EIGHTH_TIME);
-    set_tone(0, TONE_HI_E);
+    set_tone(0, TONE_E5);
     set_volume(0, 14);
     sync_wait(EIGHTH_TIME);
     set_volume(0, 0);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_HI_G);
+    set_tone(0, TONE_G5);
     set_volume(0, 15);
     sync_wait(SIXTEENTH_TIME);
     set_volume(0, 0);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_HI_FS);
+    set_tone(0, TONE_FS5);
     set_volume(0, 15);
     sync_wait(HALF_TIME);
 	/* BAR 8 */
-	set_tone(0, TONE_HI_A);
+	set_tone(0, TONE_A5);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_HI_G);
+    set_tone(0, TONE_G5);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_HI_A);
+    set_tone(0, TONE_A5);
     sync_wait(SIXTEENTH_TIME);
 	set_volume(0, 0);
 	sync_wait(SIXTEENTH_TIME);
-	set_tone(0, TONE_HI_C);
+	set_tone(0, TONE_C6);
 	set_volume(0, 15);
 	sync_wait(EIGHTH_TIME);
-	set_tone(0, TONE_HI_A);
+	set_tone(0, TONE_A5);
 	sync_wait(SIXTEENTH_TIME);
-	set_tone(0, TONE_HI_G);
+	set_tone(0, TONE_G5);
 	sync_wait(SIXTEENTH_TIME);
-	set_tone(0, TONE_HI_E);
+	set_tone(0, TONE_E5);
 	sync_wait(SIXTEENTH_TIME);
-	set_tone(0, TONE_HI_G);
+	set_tone(0, TONE_G5);
 	sync_wait(SIXTEENTH_TIME);
 	set_volume(0, 0);
 	sync_wait(SIXTEENTH_TIME);
-	set_tone(0, TONE_LO_D);
+	set_tone(0, TONE_D5);
 	set_volume(0, 15);
 	sync_wait(SIXTEENTH_TIME + EIGHTH_TIME);
-	set_tone(0, TONE_LO_C);
+	set_tone(0, TONE_C5);
 	sync_wait(EIGHTH_TIME);
 	set_volume(0, 0);
 	sync_wait(EIGHTH_TIME);
-	set_tone(0, TONE_HI_E);
+	set_tone(0, TONE_E5);
 	set_volume(0, 15);
 	sync_wait(EIGHTH_TIME);
 	set_volume(0, 0);
 	sync_wait(SIXTEENTH_TIME);
-	set_tone(0, TONE_HI_G);
+	set_tone(0, TONE_G5);
 	set_volume(0, 15);
 	sync_wait(SIXTEENTH_TIME);
 	set_volume(0, 0);
 	sync_wait(EIGHTH_TIME);
-	set_tone(0, TONE_HI_A);
+	set_tone(0, TONE_A5);
 	set_volume(0, 15);
 	sync_wait(QUARTER_TIME + EIGHTH_TIME);
-	set_tone(0, TONE_HI_B);
+	set_tone(0, TONE_B5);
 	sync_wait(EIGHTH_TIME);
-    set_tone(0, TONE_HI_A);
+    set_tone(0, TONE_A5);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_HI_G);
+    set_tone(0, TONE_G5);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_HI_A);
+    set_tone(0, TONE_A5);
     sync_wait(SIXTEENTH_TIME);
     set_volume(0, 0);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_HI_E);
+    set_tone(0, TONE_E5);
     set_volume(0, 15);
     sync_wait(EIGHTH_TIME);
-    set_tone(0, TONE_LO_D);
+    set_tone(0, TONE_D5);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_LO_C);
+    set_tone(0, TONE_C5);
     sync_wait(SIXTEENTH_TIME - 1);
     set_volume(0, 0);
     sync_wait(2);
     set_volume(0, 15);
     sync_wait(SIXTEENTH_TIME - 1);
-    set_tone(0, TONE_LO_D);
+    set_tone(0, TONE_D5);
     sync_wait(SIXTEENTH_TIME);
     set_volume(0, 0);
     sync_wait(SIXTEENTH_TIME);
-    set_tone(0, TONE_LO_A);
+    set_tone(0, TONE_A4);
     set_volume(0, 15);
     sync_wait(SIXTEENTH_TIME + EIGHTH_TIME);
-    set_tone(0, TONE_LO_C);
+    set_tone(0, TONE_C5);
     sync_wait(EIGHTH_TIME);
     stop_sound();
 
