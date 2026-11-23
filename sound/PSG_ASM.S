@@ -42,67 +42,6 @@ _write_psg:
 		move.b		write_val(sp),(a0)	; Read value from memory
 		rts
 
-; ==== Function: set_tone ====
-; Purpose: Loads the tone registers (coarse and fine) for the given channel (0=A, 1=B, 2=C)
-;          with the given {12-bit} tuning.
-; Input: Channel(UINT8) - The channel (A, B, or C) that is being written to
-;        Tuning(UINT16) - 12-bit tone that will be written to the specified channel
-; Output: None
-;		xdef		_set_tone
-;
-;tone_channel	equ		5
-;tone_tune	equ		6
-;
-;_set_tone:
-;		move.b		tone_tune(sp),d0
-;
-;
-;		move.b		tone_channel(sp),d1	; Get channel
-;		cmpi.b		#3,d1
-;		bgt.b		tone_exit	; If channel > 3, invalid. Reject.
-;		; ^ Costs 8 cycles, but needed for spec?
-;		moveq.l		#1,d0
-;		lsl.b		d1,d0	; Shift to get 1, 2, or 4 for channel register starts
-;		; Mask to get 0, 2, or 4 for actual channel tone register starts
-;		andi.b		#6,d0	; (Faster than a branch)
-;
-;tone_exit:
-;		rts
-
-; ==== Function: set_volume ====
-; Purpose: Set the volume level for the given channel
-; Input: Channel(UINT8) - The channel (A, B, or C) that is being written to
-;        Volume(UINT8) - The volume value to be written to specified channel
-; 
-; Output: None
-
-; ==== Function: enable_channel ====
-; Purpose: Turns the given channel’s (0=A, 1=B, 2=C) tone/noise signals on/off (0=off, 1=on).
-; Input: Channel(UINT8) - The channel (A, B, or C) that is being written to
-;        Tone(UINT8) - Set the tone for the specified channel to be either on or off
-;        Noise(UINT8) - Set the noise for the specified channel to be either on or off
-; Output: None
-
-
-; ==== Function: set_noise ====
-; Purpose: Load the Noise register with the given tuning.
-; Input: Tuning(UINT8) - The 5-bit tuning value loaded to the noise register
-; Output: None
-
-
-; ==== Function: set_envelope ====
-; Purpose: Loads the PSG envelope control registers with the given envelope shape and 16-bit sustain.
-; Input: Shape(UINT8) - The shape loaded into the envelope control registers
-;        Sustain(UINT16) - The sustain value being written to the envelope control registers
-; Output: None
-
-
-
-; ==== Function: stop_sound ====
-; Purpose: Silences all PSG sound production.
-; Input: None
-; Output: None
-
 ; ==== Function: super ====
 ; Purpose: Enter supervisor mode, saving the old SSP on the user stack.
 ; Input: None
