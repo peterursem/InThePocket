@@ -1,3 +1,21 @@
+/*
+	Peter Ursem
+	purse327@mtroyal.ca
+
+	Logan Campbell
+	lcamp702@mtroyal.ca
+
+	COMP2659-001
+	Steve Kalmar
+
+	In the Pocket - Checkpoint 4
+	Due: Nov 25th, 2026 (with extension)
+
+	Functions for playing the music track.
+
+	sound/music.c
+*/
+
 #include "music.h"
 #include "psg.h"
 #include <osbind.h>

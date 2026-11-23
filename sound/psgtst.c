@@ -1,3 +1,21 @@
+/*
+	Peter Ursem
+	purse327@mtroyal.ca
+
+	Logan Campbell
+	lcamp702@mtroyal.ca
+
+	COMP2659-001
+	Steve Kalmar
+
+	In the Pocket - Checkpoint 4
+	Due: Nov 25th, 2026 (with extension)
+
+	Tests for PSG control functions.
+
+	sound/psgtst.c
+*/
+
 #include "psg.h"
 #include <osbind.h>
 
