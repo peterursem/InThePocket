@@ -1,11 +1,11 @@
 #include "track.h"
 
 /* ==== TIMING ==== */
-#define WHOLE_TIME	240/*160*/ /* Frame wait for a whole note (16800/BPM) */
-#define HALF_TIME	120/*80 *//* Frame wait for a half note (8400/BPM) */
-#define QUARTER_TIME	60/*40 *//* Frame wait for a quarter note (4200/BPM)*/
-#define EIGHTH_TIME	30/*20 *//* Frame wait for an eighth note (2100/BPM) */
-#define SIXTEENTH_TIME	15/*10 *//* Frame wait for an eighth note (1050/BPM) */
+#define WHOLE_TIME	160 /* Frame wait for a whole note (16800/BPM) */
+#define HALF_TIME	80 /* Frame wait for a half note (8400/BPM) */
+#define QUARTER_TIME	40 /* Frame wait for a quarter note (4200/BPM)*/
+#define EIGHTH_TIME	20 /* Frame wait for an eighth note (2100/BPM) */
+#define SIXTEENTH_TIME	10 /* Frame wait for an eighth note (1050/BPM) */
 
 /* ==== NOTES ==== */
 /* Octave 1 */
@@ -148,6 +148,7 @@
 
 
 const UINT8 track[] = {
+	WAIT(116), WAIT(116), WAIT(116), WAIT(116), WAIT(120), /* WAIT 584 FRAMES FOR START */
 	/* (1) */
 	DAT_INIT_A(G4, 15, 0xFE),	WAIT(HALF_TIME), WAIT(HALF_TIME),
 	/* (2) */
