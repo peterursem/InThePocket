@@ -24,7 +24,7 @@
 #include "events/events.h"
 #include "song/song.h"
 #include "sound/music.h"
-#include "sound/track.c"
+#include "sound/track.h"
 
 void main_init_buffers(UINT32 *buffers[2]);
 
@@ -86,6 +86,7 @@ int main()
 		}
 	}
 
+	stop_music();
 	render(buffers[0], 0, &model);
 	set_screen(buffers[0]);
 

@@ -57,6 +57,15 @@ void update_music(UINT32 time_elapsed)
 		Super(exit_ssp);
 }
 
+void stop_music()
+{
+	long exit_ssp = Super(0);
+
+	stop_sound();
+
+	Super (exit_ssp);
+}
+
 void music_update_regs(UINT16 mod) {
 	UINT8 reg = 0; /* Register # being written to in mod loop */
 
