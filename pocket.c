@@ -130,14 +130,38 @@ OUTPUT: N/A
 */
 
 bool display_menu(){
-	
-	bool play;
-	UINT32 * base;
-	char c;
 
-	base = get_pbase();
-	render_menu(base);
-	c=get_input();
+	UINT32 time_then, time_now;
+	bool play;
+	char c;
+	UINT32 *buffers[2];
+	UINT8 buffer = 1;
+	UINT8 button = 1;
+	main_init_buffers(buffers);
+	time_then=get_time();
+
+	render_menu(buffers[0],0);
+	render_menu(buffers[1],0);
+
+    while (!has_input())
+    {
+        time_now = get_time();
+
+        if (time_now - time_then >= 35)
+        {
+            if (button == 0)
+                button = 2;
+            else
+                button = 0;
+
+            render_menu(buffers[buffer], button);
+            set_screen(buffers[buffer]);
+            buffer = 1 - buffer;
+            time_then = time_now;
+        }
+    }
+
+    c = get_input();	
 	if(c=='a') play=true;
 	else if(c=='d') play=false;
 	

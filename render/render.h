@@ -43,7 +43,7 @@ INPUT: base(UINT32 *): Pointer to frame buffer
 OUTPUT: N/A
 */
 
-void render_menu(UINT32 *base);
+void render_menu(UINT32 *base, UINT8 selected);
 
 /* ==== Function: render_staff ====
 PURPOSE: Renders one four line staff.
