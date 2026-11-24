@@ -132,39 +132,54 @@ OUTPUT: N/A
 bool display_menu(){
 
 	UINT32 time_then, time_now;
-	bool play;
+    bool play = true;
 	char c;
 	UINT32 *buffers[2];
 	UINT8 buffer = 1;
 	UINT8 button = 1;
+	bool selected = false;
+    UINT8 shown = 0;
 	main_init_buffers(buffers);
 	time_then=get_time();
 
 	render_menu(buffers[0],0);
 	render_menu(buffers[1],0);
 
-    while (!has_input())
+        while (!selected)
     {
+        if (has_input())
+        {
+            c = get_input();
+
+            if (c == 'a')
+            {
+                button = 1;
+                play = true;
+            }
+            else if (c == 'd')
+            {
+                button = 2;
+                play = false;
+            }
+            else if (c == ' ')
+                selected = true;
+        }
+
         time_now = get_time();
 
         if (time_now - time_then >= 35)
         {
-            if (button == 0)
-                button = 2;
+            if (shown == 0)
+                shown = button;
             else
-                button = 0;
+                shown = 0;
 
-            render_menu(buffers[buffer], button);
+            render_menu(buffers[buffer], shown);
             set_screen(buffers[buffer]);
             buffer = 1 - buffer;
             time_then = time_now;
         }
     }
-
-    c = get_input();	
-	if(c=='a') play=true;
-	else if(c=='d') play=false;
-	
-
-	return play;
+	set_screen(buffers[0]);
+    return play;
 }
