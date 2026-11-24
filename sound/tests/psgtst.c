@@ -29,9 +29,9 @@ note s / frame s = frame wait
 /*
     DEFINES FOR 103 BPM
 */
-#define WHOLE_TIME 163 /* Frame wait for a whole note (16800/BPM) */
-#define HALF_TIME 82 /* Frame wait for a half note (8400/BPM)*/
-#define QUARTER_TIME 41 /* Frame wait for a quarter note (4200/BPM)*/
+#define WHOLE_TIME 160 /* Frame wait for a whole note (16800/BPM) */
+#define HALF_TIME 80 /* Frame wait for a half note (8400/BPM)*/
+#define QUARTER_TIME 40 /* Frame wait for a quarter note (4200/BPM)*/
 #define EIGHTH_TIME 20 /* Frame wait for an eighth note (2100/BPM) */
 #define SIXTEENTH_TIME 10 /* Frame wait for an eighth note (1050/BPM) */
 
