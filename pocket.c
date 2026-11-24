@@ -38,13 +38,14 @@ int main()
 	UINT32 time_then, time_now, time_flip;
 	Model model;
 	UINT32 *buffers[2];
-	UINT8 buffer = 1;
+	UINT8 buffer = 0;
 	bool quit, render_ready;
 
 	main_init_buffers(buffers);
 
 	time_now = get_time();
-	render_credit_splash(buffers[0]);
+	render_credit_splash(buffers[1]);
+	set_screen(buffers[1]);
 	while(get_time() < time_now + 210);
 
 	time_then = get_time();

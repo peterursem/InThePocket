@@ -377,7 +377,7 @@ OUTPUT: N/A
 */
 void render_credit_splash(UINT32 *base)
 {
-	const int start_row = 82;
+	const int start_row = 86;
 	const int dev_row = start_row + 64;
 	const int music_row = dev_row + 80;
 
@@ -391,7 +391,7 @@ void render_credit_splash(UINT32 *base)
 
 	plot_nxstring(base, music_row,		128, "Music - \"Beware of Doug\"", 1);
 	plot_nxstring(base, music_row+52,	152, "Composed by", 0);
-	plot_nxstring(base, music_row+52,	256, "Lark Duek", 1);
+	plot_nxstring(base, music_row+52,	256, "Lark Dueck", 1);
 	plot_nxstring(base, music_row+76,	128, "Made famous by", 0);
 	plot_nxstring(base, music_row+76,	256, "The Cool Cats Combo", 1);
 }
