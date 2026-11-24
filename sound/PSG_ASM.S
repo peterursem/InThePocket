@@ -41,32 +41,3 @@ _write_psg:
 		movea.l		#reg_val,a0		; Load value address
 		move.b		write_val(sp),(a0)	; Read value from memory
 		rts
-
-; ==== Function: super ====
-; Purpose: Enter supervisor mode, saving the old SSP on the user stack.
-; Input: None
-; Output: None
-; Credit: https://nguillaumin.github.io/perihelion-m68k-tutorials/_of_various_things_mystic_and_important_mainly_concerning_the_art_of_understanding_digits_and_performing_traps.html
-
-super:
-		clr.l	-(a7)
-		move.w	#32,-(a7)
-		trap	#1
-		addq.l	#6,a7
-		move.l	d0,old_stack
-		rts
-
-; ==== Function: super ====
-; Purpose: Exit supervisor mode, restoring the SSP.
-; Input: None
-; Output: None
-; Credit: https://nguillaumin.github.io/perihelion-m68k-tutorials/_of_various_things_mystic_and_important_mainly_concerning_the_art_of_understanding_digits_and_performing_traps.html
-
-user:
-		move.l	old_stack,-(a7)
-		move.w	#32,-(a7)
-		trap	#1
-		addq.l	#6,a7
-		rts
-
-old_stack:	dc.l		0
