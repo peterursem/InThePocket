@@ -41,10 +41,15 @@ int main()
 	UINT8 buffer = 1;
 	bool quit, render_ready;
 
+	main_init_buffers(buffers);
+
+	time_now = get_time();
+	render_credit_splash(buffers[0]);
+	while(get_time() < time_now + 210);
+
 	time_then = get_time();
 	model_init(&model, song, SONG_NOTES, time_then);
 
-	main_init_buffers(buffers);
 	render(buffers[0], 0, &model);
 	render(buffers[1], 1, &model);
 
