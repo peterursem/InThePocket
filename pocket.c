@@ -27,7 +27,11 @@
 #include "sound/track.h"
 #include "sound/effects.h"
 
+#define END_SCREEN_TIME 3 /* End screen linger time in seconds */
+
 void main_init_buffers(UINT32 *buffers[2]);
+void play_game();
+bool display_menu();
 
 /* ==== Function: main ====
 PURPOSE: Main game setup and loop
@@ -38,22 +42,62 @@ OUTPUT: N/A
 */
 int main()
 {
+	while(display_menu()) /* Allow for replay after the game */
+		play_game();
+	
+	return 0;
+}
+
+/* ==== Function: main_init_buffers ====
+PURPOSE: Initialize the buffer pointer array and disable cursor flash
+
+INPUT: (UINT32 *[2]) Pointer to array of 2 buffer pointers
+
+OUTPUT: N/A
+*/
+void main_init_buffers(UINT32 *buffers[2])
+{
+	/* Stop OS cursor blink */
+	disable_cursor();
+	/* Initialize buffer pointers */
+	buffers[0] = get_pbase();
+	buffers[1] = buff_256();
+}
+
+/* ==== Function: play_game ====
+PURPOSE: Plays In the Pocket.
+
+INPUT: N/A
+
+OUTPUT: N/A
+*/
+
+void play_game(){
+
 	UINT32 time_then, time_now, time_flip;
 	Model model;
 	UINT32 *buffers[2];
-	UINT8 buffer = 1;
+	UINT8 buffer = 0;
 	bool quit, render_ready;
+
+	main_init_buffers(buffers);
+
+	time_now = get_time();
+
+	render_credit_splash(buffers[1]);
+	set_screen(buffers[1]);
+
+	while(get_time() < time_now + 210);
 
 	time_then = get_time();
 	model_init(&model, song, SONG_NOTES, time_then);
 
-	main_init_buffers(buffers);
 	render(buffers[0], 0, &model);
-	render(buffers[1], 1, &model);
-
-	init_music(track);
-
 	time_then = get_time();
+	set_screen(buffers[0]);
+	time_flip = time_then+1;
+  
+  init_music(track);
 
 	quit = false;
 	while (!quit)
@@ -91,21 +135,69 @@ int main()
 	render(buffers[0], 0, &model);
 	set_screen(buffers[0]);
 
-	return 0;
+	time_now = get_time();
+	while((get_time() - time_now) < (70 * END_SCREEN_TIME)); /* Show end screen for 3 seconds */
 }
 
-/* ==== Function: main_init_buffers ====
-PURPOSE: Initialize the buffer pointer array and disable cursor flash
+/* ==== Function: display_menu ====
+PURPOSE: Displays splash screen / main menu.
 
-INPUT: (UINT32 *[2]) Pointer to array of 2 buffer pointers
+INPUT: N/A
 
 OUTPUT: N/A
 */
-void main_init_buffers(UINT32 *buffers[2])
-{
-	/* Stop OS cursor blink */
-	disable_cursor();
-	/* Initialize buffer pointers */
-	buffers[0] = get_pbase();
-	buffers[1] = buff_256();
+
+bool display_menu(){
+
+	UINT32 time_then, time_now;
+    bool play = true;
+	char c;
+	UINT32 *buffers[2];
+	UINT8 buffer = 1;
+	UINT8 button = 1;
+	bool selected = false;
+    UINT8 shown = 0;
+	main_init_buffers(buffers);
+	time_then=get_time();
+
+	render_menu(buffers[0],0);
+	render_menu(buffers[1],0);
+
+    while (!selected)
+    {
+        if (has_input())
+        {
+            c = get_input();
+
+            if (c == 'a')
+            {
+                button = 1;
+                play = true;
+            }
+            else if (c == 'd')
+            {
+                button = 2;
+                play = false;
+            }
+            else if (c == ' ')
+                selected = true;
+        }
+
+        time_now = get_time();
+
+        if (time_now - time_then >= 35)
+        {
+            if (shown == 0)
+                shown = button;
+            else
+                shown = 0;
+
+            render_menu(buffers[buffer], shown);
+            set_screen(buffers[buffer]);
+            buffer = 1 - buffer;
+            time_then = time_now;
+        }
+    }
+	set_screen(buffers[0]);
+    return play;
 }

@@ -109,6 +109,34 @@ void render(UINT32 *base, UINT8 buffer, Model *model)
 		render_end_screen(base, "Game Over", 9, "Doug was booed off stage", 24, model->meter.score);
 }
 
+
+/* ==== Function: render_menu ====
+PURPOSE: Renders the menu / splash screen
+
+INPUT: base(UINT32 *): Pointer to frame buffer
+
+OUTPUT: N/A
+*/
+void render_menu(UINT32 *base, UINT8 selected){
+	
+	char * one_player= "1 Player";
+	char * m_exit = "exit";
+
+	fill_screen(base);
+	plot_20l_bitmap(base, 49, bg_alt, BG_HEIGHT);
+	plot_nxstring(base, 32, 112, "In The Pocket", 2);
+	clear_region(base,333,70,35,275);
+	clear_region(base,333,395,35,175);
+	if(selected!=1){
+			plot_xstring(base, 338, 75, one_player, 2);
+	}
+	
+	if(selected!=2){
+		plot_xstring(base, 338, 423, m_exit, 2);
+	}
+
+}
+
 /* ==== Function: render_staff ====
 PURPOSE: Renders one four line staff.
 
@@ -356,7 +384,7 @@ OUTPUT: N/A
 */
 void render_end_screen(UINT32 *base, char *t1, UINT16 t1_len, char *t2, UINT16 t2_len, UINT32 score)
 {
-    int row = 168;
+    const int row = 168;
     char score_str[SCORE_MAX_LEN + 1];
     int places = render_int_to_string(score_str, score, SCORE_MAX_LEN);
 	int score_col = 256 - (8 * places);
@@ -366,6 +394,34 @@ void render_end_screen(UINT32 *base, char *t1, UINT16 t1_len, char *t2, UINT16 t
 
     plot_nxstring(base, row + 48, score_col, "Score: ", 1);
     plot_nxstring(base, row + 48, score_col + 112, score_str, 1);
+}
+
+/* ==== Function: render_end_screen ====
+PURPOSE: Renders a splash screen with all the game credits.
+
+INPUT: base(UINT32 *): Pointer to frame buffer
+
+OUTPUT: N/A
+*/
+void render_credit_splash(UINT32 *base)
+{
+	const int start_row = 86;
+	const int dev_row = start_row + 64;
+	const int music_row = dev_row + 80;
+
+	fill_screen(base);
+	plot_nxstring(base, start_row, 112, "In The Pocket", 2);
+
+	plot_nxstring(base, dev_row,	224, "By", 0);
+	plot_nxstring(base, dev_row, 	256, "Peter Ursem", 1);
+	plot_nxstring(base, dev_row+24, 216, "and", 0);
+	plot_nxstring(base, dev_row+24, 256, "Logan Campbell", 1);
+
+	plot_nxstring(base, music_row,		128, "Music - \"Beware of Doug\"", 1);
+	plot_nxstring(base, music_row+52,	152, "Composed by", 0);
+	plot_nxstring(base, music_row+52,	256, "Lark Dueck", 1);
+	plot_nxstring(base, music_row+76,	128, "Made famous by", 0);
+	plot_nxstring(base, music_row+76,	256, "The Cool Cats Combo", 1);
 }
 
 /* ==== Function: render_int_to_string ====
