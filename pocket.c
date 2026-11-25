@@ -91,6 +91,8 @@ void play_game(){
 
 	render(buffers[0], 0, &model);
 	time_then = get_time();
+	set_screen(buffers[0]);
+	time_flip = time_then+1;
 
 	quit = false;
 	while (!quit)
