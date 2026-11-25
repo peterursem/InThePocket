@@ -137,6 +137,9 @@ void stop_sound()
 
 	/* 1 = off for PSG settings */
 	settings |= 0x3F; /* Disable all channels */
-
 	write_psg(SETTINGS_REG, settings);
+
+	write_psg(VOLUME_REG,     0); /* Channel A — clears M bit + volume */
+	write_psg(VOLUME_REG + 1, 0); /* Channel B */
+	write_psg(VOLUME_REG + 2, 0); /* Channel C — was left at 0x1F from fx_miss */
 }
