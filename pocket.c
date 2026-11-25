@@ -80,16 +80,16 @@ void play_game(){
 	main_init_buffers(buffers);
 
 	time_now = get_time();
+
 	render_credit_splash(buffers[1]);
 	set_screen(buffers[1]);
+
 	while(get_time() < time_now + 210);
 
 	time_then = get_time();
 	model_init(&model, song, SONG_NOTES, time_then);
 
 	render(buffers[0], 0, &model);
-	render(buffers[1], 1, &model);
-
 	time_then = get_time();
 
 	quit = false;
