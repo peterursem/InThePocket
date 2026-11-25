@@ -84,7 +84,10 @@ void cond_check_key_buffer(Model *model){
 					model_advance_head(model);
 			}
 			else
+			{
 				meter_apply_miss(&model->meter);
+				fx_miss();
+			}
 		}
 	}
 
