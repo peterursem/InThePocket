@@ -57,6 +57,27 @@ static const UINT32 *note_heads[3] = {
 	note_half_head,
 	note_black_head};
 
+static INT8 last_enjoyment[2] = {-1, -1};
+static INT8 last_mul_progress[2] = {-1, -1};
+static INT8 last_multi[2] = {-1, -1};
+
+/* ==== Function: render_init ====
+PURPOSE: Reset static variables for another game
+
+INPUT: None
+
+OUTPUT: N/A
+*/
+void render_init()
+{
+	last_enjoyment[0] = -1;
+	last_enjoyment[1] = -1;
+	last_mul_progress[0] = -1;
+	last_mul_progress[1] = -1;
+	last_multi[0] = -1;
+	last_multi[1] = -1;
+}
+
 /* ==== Function: render ====
 PURPOSE: Master render function. Calls the other render functions, and renders the game world onto the screen.
 
@@ -258,7 +279,6 @@ OUTPUT: N/A
 */
 void render_enjoyment(UINT32 *base, UINT8 buffer, INT8 enjoyment)
 {
-	static INT8 last_enjoyment[2] = {-1, -1};
 	INT16 plot_height;
 
 	/* Clip enjoyment to meter size */
@@ -332,9 +352,6 @@ OUTPUT: N/A
 */
 void render_multiplier(UINT32 *base, UINT8 buffer, int row, int col, UINT8 multi, UINT8 progress)
 {	/* Print score multiplier */
-	static INT8 last_mul_progress[2] = {-1, -1};
-	static INT8 last_multi[2] = {-1, -1};
-
 	INT8 delta = progress - last_mul_progress[buffer];
 	int i;
 

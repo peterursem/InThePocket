@@ -25,6 +25,15 @@
 #include "../types.h"
 #include "../model/model.h"
 
+/* ==== Function: render_init ====
+PURPOSE: Reset static variables for another game
+
+INPUT: None
+
+OUTPUT: N/A
+*/
+void render_init();
+
 /* ==== Function: render ====
 PURPOSE: Master render function. Calls the other render functions, and renders the game world onto the screen.
 

@@ -29,6 +29,17 @@
 
 #define END_SCREEN_TIME 3 /* End screen linger time in seconds */
 
+#define SCAN_LEFT	75
+#define SCAN_A		30
+
+#define SCAN_RIGHT	77
+#define SCAN_D		32
+
+#define SCAN_RETURN	28
+#define SCAN_SPACE	57
+#define SCAN_ENTER	114
+
+
 void main_init_buffers(UINT32 *buffers[2]);
 void play_game();
 bool display_menu();
@@ -42,9 +53,16 @@ OUTPUT: N/A
 */
 int main()
 {
-	while(display_menu()) /* Allow for replay after the game */
-		play_game();
+	UINT32 *buffers[2];
+	UINT8 buffer = 0;
+
+	main_init_buffers(buffers);
+
+	while(display_menu(buffers, &buffer)) /* Allow for replay after the game */
+		play_game(buffers, &buffer);
 	
+	set_screen(buffers[0]);
+
 	return 0;
 }
 
@@ -72,30 +90,28 @@ INPUT: N/A
 OUTPUT: N/A
 */
 
-void play_game(){
+void play_game(UINT32 *buffers[2], UINT8 *buffer){
 
 	UINT32 time_then, time_now, time_flip;
 	Model model;
-	UINT32 *buffers[2];
-	UINT8 buffer = 0;
-	bool quit, render_ready;
 
-	main_init_buffers(buffers);
+	bool quit = false;
+	bool render_ready = false;
 
 	time_now = get_time();
 
-	render_credit_splash(buffers[1]);
-	set_screen(buffers[1]);
+	render_credit_splash(buffers[*buffer]);
+	set_screen(buffers[*buffer]);
+	*buffer = 1 - *buffer; /* Swap back buffer index */
 
 	while(get_time() < time_now + 210);
 
 	time_then = get_time();
 	model_init(&model, song, SONG_NOTES, time_then);
 
-	render(buffers[0], 0, &model);
+	render_init();
+	render(buffers[*buffer], *buffer, &model);
 	time_then = get_time();
-	set_screen(buffers[0]);
-	time_flip = time_then+1;
 
 	init_music(track);
 
@@ -105,7 +121,7 @@ void play_game(){
 		time_now = get_time();
 
 		if (has_input())
-			asynch_key_hit(&model, get_input());
+			asynch_key_hit(&model, get_ascii_input());
 			
 		if (!render_ready && (time_now > time_then))
 		{
@@ -117,69 +133,65 @@ void play_game(){
 			update_fx(model.last_interval);
 			update_music(model.last_interval);
 
-			set_screen(buffers[buffer]); /* Show previous back buffer */
-			buffer = 1 - buffer; /* Swap back buffer index */
+			set_screen(buffers[*buffer]); /* Show previous back buffer */
+			*buffer = 1 - *buffer; /* Swap back buffer index */
 
 			time_flip = time_now;
 			render_ready = true; /* Ready to render on next tick */
 		}
 		else if (render_ready && (time_now > time_flip))
 		{
-			render(buffers[buffer], buffer, &model); /* Render to back buffer */
+			render(buffers[*buffer], *buffer, &model); /* Render to back buffer */
 			time_then = get_time();
 			render_ready = false; /* No longer ready to render */
 		}
 	}
 
 	stop_music();
-	render(buffers[0], 0, &model);
-	set_screen(buffers[0]);
+	render(buffers[*buffer], *buffer, &model);
+	set_screen(buffers[*buffer]);
+	*buffer = 1 - *buffer;
 
 	time_now = get_time();
 	while((get_time() - time_now) < (70 * END_SCREEN_TIME)); /* Show end screen for 3 seconds */
 }
 
 /* ==== Function: display_menu ====
-PURPOSE: Displays splash screen / main menu.
+PURPOSE: Displays main menu.
 
 INPUT: N/A
 
 OUTPUT: N/A
 */
 
-bool display_menu(){
+bool display_menu(UINT32 *buffers[2], UINT8 *buffer){
 
-	UINT32 time_then, time_now;
+	UINT32 time_then = get_time();
+	UINT32 time_now;
     bool play = true;
 	char c;
-	UINT32 *buffers[2];
-	UINT8 buffer = 1;
+
 	UINT8 button = 1;
 	bool selected = false;
     UINT8 shown = 0;
-	main_init_buffers(buffers);
-	time_then=get_time();
-
-	render_menu(buffers[0],0);
-	render_menu(buffers[1],0);
 
     while (!selected)
     {
         if (has_input())
         {
-            c = get_input();
+            c = get_scan_input();
 
-            if (c == 'a')
+            if (c == SCAN_A || c == SCAN_LEFT)
             {
                 button = 1;
                 play = true;
             }
-            else if (c == 'd')
+            else if (c == SCAN_D || c == SCAN_RIGHT)
             {
                 button = 2;
                 play = false;
             }
-            else if (c == ' ')
+            else if (c == SCAN_RETURN || c== SCAN_SPACE || c == SCAN_ENTER)
                 selected = true;
         }
 
@@ -192,12 +204,12 @@ bool display_menu(){
             else
                 shown = 0;
 
-            render_menu(buffers[buffer], shown);
-            set_screen(buffers[buffer]);
-            buffer = 1 - buffer;
+            render_menu(buffers[*buffer], shown);
+            set_screen(buffers[*buffer]);
+            *buffer = 1 - *buffer;
             time_then = time_now;
         }
     }
-	set_screen(buffers[0]);
+	
     return play;
 }
