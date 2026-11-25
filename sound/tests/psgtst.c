@@ -16,8 +16,9 @@
 	sound/psgtst.c
 */
 
-#include "psg.h"
+#include "../psg.h"
 #include <osbind.h>
+#include <stdio.h>
 
 /*
 240/BPM = S per whole note
@@ -51,6 +52,63 @@ note s / frame s = frame wait
 #define TONE_C6 00326
 #define TONE_HI_D 00276
 
+
+void test_read_write()
+{
+    UINT8 value = 0;
+    bool ok;
+
+    write_psg(0, 0x55);
+    ok = read_psg(0, &value);
+
+    if (ok && value == 0x55)
+        printf("read/write register 0: pass\r\n");
+    else
+        printf("read/write register 0: FAIL\r\n");
+
+    ok = read_psg(16, &value);
+
+    if (!ok)
+        printf("read invalid register 16: pass\r\n");
+    else
+        printf("read invalid register 16: FAIL\r\n");
+}
+
+void test_set_tone()
+{
+    UINT8 fine = 0;
+    UINT8 coarse = 0;
+
+    set_tone(0, 0x123);
+    read_psg(0, &fine);
+    read_psg(1, &coarse);
+
+    if (fine == 0x23 && coarse == 0x01)
+        printf("set_tone valid: pass\r\n");
+    else
+        printf("set_tone valid: FAIL\r\n");
+
+    set_tone(3, 0x456);
+    read_psg(0, &fine);
+    read_psg(1, &coarse);
+
+    if (fine == 0x23 && coarse == 0x01)
+        printf("set_tone bad channel 3: pass\r\n");
+    else
+        printf("set_tone bad channel 3: FAIL\r\n");
+
+    set_tone(0, 0x1000);
+    read_psg(0, &fine);
+    read_psg(1, &coarse);
+
+    if (fine == 0x23 && coarse == 0x01)
+        printf("set_tone bad tuning: pass\r\n");
+    else
+        printf("set_tone bad tuning: FAIL\r\n");
+
+    fflush(stdout);
+}
+
 void sync_wait(int syncs) 
 {
     int i;
@@ -61,6 +119,8 @@ void sync_wait(int syncs)
 int main()
 {
     long exit = Super(0);
+    test_read_write();
+    test_set_tone();
     set_tone(0, 01247);
     enable_channel(0, true, false);
     set_volume(0, 15);
@@ -190,6 +250,7 @@ int main()
     sync_wait(EIGHTH_TIME);
     stop_sound();
 
+    Cnecin();
     Super(exit);
 
     return 0;
