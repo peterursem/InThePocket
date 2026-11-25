@@ -23,7 +23,7 @@ _read_psg:
 		movea.l		read_val(sp),a1
 		move.b		(a0),(a1)
 
-		moveq.l		#-1,d0		; Return true for a good read
+		moveq.l		#1,d0		; Return true for a good read
 		rts
 
 read_bad:

@@ -34,12 +34,12 @@ void test_fx_miss()
 {
 	/*
 	TEST #	REASON					TEST DATA		EXPECTED RESULT			ACTUAL RESULT
-	1		miss tone should be		fx_miss()		regs 4-5 between
+	1		miss tone should be		fx_miss()		regs 4-5 between		as expected
 			one of the out of						00061 and 00226
 			tone notes
-	2		miss should use			fx_miss()		reg 7 bit 2 = 0,
+	2		miss should use			fx_miss()		reg 7 bit 2 = 0,		as expected
 			tone, not noise							bit 5 = 1
-	3		miss should use the		fx_miss()		reg 10 = 0x1F,
+	3		miss should use the		fx_miss()		reg 10 = 0x1F,			as expected
 			envelope								reg 13 = 0xA
 	*/
 
@@ -92,7 +92,7 @@ void test_miss_end()
 {
 	/*
 	TEST #	REASON					TEST DATA		EXPECTED RESULT			ACTUAL RESULT
-	4		miss should stop		fx_miss(),		reg 10 = 0,
+	4		miss should stop		fx_miss(),		reg 10 = 0,				as expected
 			after 15 frames			update_fx(15)	reg 7 bits 2 and 5
 													set
 	*/
@@ -128,11 +128,11 @@ void test_fx_press()
 {
 	/*
 	TEST #	REASON					TEST DATA		EXPECTED RESULT			ACTUAL RESULT
-	5		press should set		fx_press()		reg 6 = 0x1F
+	5		press should set		fx_press()		reg 6 = 0x1F			as expected
 			the noise tuning
-	6		press should use		fx_press()		reg 7 bit 2 = 1,
+	6		press should use		fx_press()		reg 7 bit 2 = 1,		as expected
 			noise, not tone							bit 5 = 0
-	7		press should use the	fx_press()		reg 10 = 0x1F,
+	7		press should use the	fx_press()		reg 10 = 0x1F,			as expected
 			envelope								reg 11 = 0xFF,
 													reg 12 = 0x07,
 													reg 13 = 0x0
@@ -186,7 +186,7 @@ void test_press_end()
 {
 	/*
 	TEST #	REASON					TEST DATA		EXPECTED RESULT			ACTUAL RESULT
-	8		press should stop		fx_press(),		reg 10 = 0,
+	8		press should stop		fx_press(),		reg 10 = 0,				as expected
 			after 15 frames			update_fx(15)	reg 7 bits 2 and 5
 													set
 	*/
@@ -222,7 +222,7 @@ void test_fx_multi()
 {
 	/*
 	TEST #	REASON					TEST DATA		EXPECTED RESULT			ACTUAL RESULT
-	9		multi should start		fx_multi()		reg 4 = 0xD6 (C5),
+	9		multi should start		fx_multi()		reg 4 = 0xD6 (C5),		as expected
 			on C5 with the							reg 5 = 0,
 			envelope								reg 12 = 0x04,
 													reg 13 = 0x9
@@ -263,11 +263,11 @@ void test_multi_notes()
 {
 	/*
 	TEST #	REASON					TEST DATA		EXPECTED RESULT			ACTUAL RESULT
-	10		second note at 25		fx_multi(),		reg 4 = 0xAA (E5)
+	10		second note at 25		fx_multi(),		reg 4 = 0xAA (E5)		as expected
 			frames left				update_fx(5)
-	11		third note at 20		update_fx(5)	reg 4 = 0x8F (G5)
+	11		third note at 20		update_fx(5)	reg 4 = 0x8F (G5)		as expected
 			frames left
-	12		last note at 10			update_fx(10)	reg 4 = 0x6B (C6)
+	12		last note at 10			update_fx(10)	reg 4 = 0x6B (C6)		as expected
 			frames left
 	*/
 
@@ -323,7 +323,7 @@ void test_multi_end()
 {
 	/*
 	TEST #	REASON					TEST DATA		EXPECTED RESULT			ACTUAL RESULT
-	13		multi should stop		fx_multi(),		reg 10 = 0,
+	13		multi should stop		fx_multi(),		reg 10 = 0,				as expected
 			after 30 frames			update_fx(30)	reg 7 bits 2 and 5
 													set
 	*/
@@ -359,11 +359,11 @@ void test_priority()
 {
 	/*
 	TEST #	REASON					TEST DATA		EXPECTED RESULT			ACTUAL RESULT
-	14		press should not		fx_multi(),		reg 13 = 0x9,
+	14		press should not		fx_multi(),		reg 13 = 0x9,			as expected
 			cut off multi			fx_press()		reg 7 bit 2 = 0
-	15		miss should cut			fx_press(),		reg 13 = 0xA,
+	15		miss should cut			fx_press(),		reg 13 = 0xA,			as expected
 			off press				fx_miss()		reg 7 bit 2 = 0
-	16		multi should cut		fx_miss(),		reg 4 = 0xD6 (C5),
+	16		multi should cut		fx_miss(),		reg 4 = 0xD6 (C5),		as expected
 			off miss				fx_multi()		reg 13 = 0x9
 	*/
 
@@ -440,11 +440,11 @@ int main()
 {
 	/*
 	TEST #	REASON					TEST DATA		EXPECTED RESULT			ACTUAL RESULT
-	17		miss should sound		fx_miss()		short out of tune
+	17		miss should sound		fx_miss()		short out of tune		as expected
 			out of tune								note
-	18		press should sound		fx_press()		short percussive
+	18		press should sound		fx_press()		short percussive		as expected
 			like a drum hit							noise
-	19		multi should sound		fx_multi()		rising C5 E5 G5 C6
+	19		multi should sound		fx_multi()		rising C5 E5 G5 C6		as expected
 			like a level up							arpeggio
 	*/
 

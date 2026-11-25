@@ -83,17 +83,17 @@ void update_fx(UINT32 elapsed)
 			set_volume(2, 0);
 			enable_channel(2, 0, 0);
 		}
-		else if (multi_time >= MULTI_N4)
+		else if (multi_time <= MULTI_N4)
 		{
 			set_tone(2, C6);
 			set_envelope(0x9, 0x0600);
 		}
-		else if (multi_time >= MULTI_N3)
+		else if (multi_time <= MULTI_N3)
 		{
 			set_tone(2, G5);
 			set_envelope(0x9, 0x0400);
 		}
-		else if (multi_time >= MULTI_N2)
+		else if (multi_time <= MULTI_N2)
 		{
 			set_tone(2, E5);
 			set_envelope(0x9, 0x0400);

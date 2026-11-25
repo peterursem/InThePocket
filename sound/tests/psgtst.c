@@ -69,9 +69,9 @@ void test_read_write()
 			read_psg should							true, value is 0x55
 			give back the same
 			value
-	2		read_psg should			reg 16			read_psg returns		FAIL - returns
-			reject a register						false					true, register
-			outside 0-15													not checked
+	2		read_psg should			reg 16			read_psg returns		as expected
+			reject a register						false
+			outside 0-15
 	*/
 
     UINT8 value = 0;
@@ -108,9 +108,8 @@ void test_set_tone()
 			land in the fine		0x123			reg 1 = 0x01
 			and coarse
 			registers
-	4		bad channel should		channel 3,		regs 0 and 1			FAIL - channel 3
-			be ignored				0x456			unchanged				writes to
-																			channel A
+	4		bad channel should		channel 3,		regs 0 and 1			as expected
+			be ignored				0x456			unchanged
 	5		tuning over 12 bits		channel 0,		regs 0 and 1			as expected
 			should be ignored		0x1000			unchanged
 	*/
@@ -163,8 +162,8 @@ void test_set_volume()
 	6		valid volume should		channel 0, 10	reg 8 = 10				as expected
 			land in the volume
 			register
-	7		bad channel should		channel 3, 5,	reg 11 still			FAIL - channel 3
-			be ignored				reg 11 preset	0x77					writes to reg 11
+	7		bad channel should		channel 3, 5,	reg 11 still			as expected
+			be ignored				reg 11 preset	0x77
 									to 0x77
 	8		volume over 5 bits		channel 0,		reg 8 still 10			as expected
 			should be ignored		0x20
@@ -218,8 +217,8 @@ void test_enable_channel()
 	10		tone off, noise on		channel 0,		reg 7 bit 0 = 1,		as expected
 			should do the			0, 1			bit 3 = 0
 			opposite
-	11		bad channel should		channel 3,		reg 7 unchanged			FAIL - clears
-			be ignored				1, 1									bit 3 and bit 6
+	11		bad channel should		channel 3,		reg 7 unchanged			as expected
+			be ignored				1, 1
 	*/
 
     UINT8 value = 0;
