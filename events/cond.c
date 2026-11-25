@@ -17,6 +17,7 @@
 
 #include "cond.h"
 #include "../model/model.h"
+#include "../sound/effects.h"
 
 #define SONG_PLAYING model->head < model->note_count /* The head is not at the end of the song */
 #define NOTE_PASSED model->game_clock > (model->notes[model->head].time + TRAVEL_TICKS + HIT_WINDOW) /* Game clock passed hit time */
@@ -33,7 +34,10 @@ void cond_check_misses(Model *model)
 	while (SONG_PLAYING && NOTE_PASSED)
 	{																	/*checks that the head is pointed at a note that has passed the hit window*/
 		if (!model->notes[model->head].hit)
+		{
 			meter_apply_miss(&model->meter);
+			fx_miss();
+		}
 
 		model_advance_head(model);										/*advances index*/
 	}
@@ -63,6 +67,7 @@ OUTPUT: N/A
 */
 void cond_check_key_buffer(Model *model){
 	UINT8 i;
+	UINT8 multi = model->meter.multiplier;
 
 	for(i = 0; i<TARGET_COUNT; i++){
 		if(model->key_press_buff[i] && SONG_PLAYING){
@@ -72,6 +77,9 @@ void cond_check_key_buffer(Model *model){
 			{
 				meter_apply_hit(&model->meter);
 				
+				if (model->meter.multiplier > multi)
+					fx_cheer();
+
 				if(model->notes[model->head].hit)
 					model_advance_head(model);
 			}
