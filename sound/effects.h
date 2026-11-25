@@ -18,6 +18,9 @@
 #ifndef EFFECTS_H
 #define EFFECTS_H
 
+void update_fx();
 void fx_cheer();
+void fx_miss();
+void fx_press();
 
 #endif

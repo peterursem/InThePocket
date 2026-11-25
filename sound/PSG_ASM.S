@@ -11,14 +11,14 @@ reg_val		equ		$FF8802
 		xdef		_read_psg
 
 read_reg	equ		5
-read_val	equ		7
+read_val	equ		6
 
 _read_psg:
 		movea.l		#reg_sel,a0		; Load register select address
 		move.b		read_reg(sp),(a0)	; Set register select number in memory
 
-		movea.l		#reg_val,a0		; Load value address
-		move.b		(a0),read_val(sp)	; Read value from memory
+		movea.l		read_val(sp),a1
+		move.b		(a0),(a1)
 
 		moveq.l		#-1,d0		; Return true for a good read
 		rts

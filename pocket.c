@@ -25,6 +25,7 @@
 #include "song/song.h"
 #include "sound/music.h"
 #include "sound/track.h"
+#include "sound/effects.h"
 
 void main_init_buffers(UINT32 *buffers[2]);
 
@@ -69,7 +70,7 @@ int main()
 			cond_check_key_buffer(&model); /* Apply key hit/misses */
 			cond_check_misses(&model); /* Apply passed note misses */
 			quit = cond_game_over(&model);
-
+			update_fx();
 			update_music(model.last_interval);
 
 			set_screen(buffers[buffer]); /* Show previous back buffer */

@@ -91,13 +91,16 @@ build\song.o: song\song.c song\song.h
 	cc68x -g -c song\song.c -o build\song.o
 
 # ==== SOUND OBJECTS ====
-SOUND =	build\psg.o sound\psg_asm.o
+SOUND =	build\psg.o sound\psg_asm.o build\effects.o
 
 build\psg.o: sound\psg.c sound\psg.h
 	cc68x -g -c sound\psg.c -o build\psg.o
 
 sound\psg_asm.o: sound\psg_asm.s sound\psg.h
 	gen -D -L2 sound\psg_asm.s
+
+build\effects.o: sound\effects.c sound\effects.h
+	cc68x -g -c sound\effects.c -o build\effects.o
 
 # ==== MUSIC OBJECTS ====
 MUSIC = build\music.o build\track.o

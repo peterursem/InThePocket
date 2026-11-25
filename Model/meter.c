@@ -17,6 +17,7 @@
 */
 
 #include "meter.h"
+#include "../sound/effects.h"
 
 #define MAX_MULTI 4
 
@@ -61,6 +62,7 @@ void meter_apply_miss(Meter *meter)
 {
 	meter_update_enjoyment(meter, -MISS_PENALTY_ENJOYMENT); /*applies miss penalty*/
 	meter_reset_multiplier(meter);							/*sends score multiplier back to 1*/
+	fx_miss();
 }
 
 /* ==== Function: meter_update_enjoyment ====
@@ -116,6 +118,7 @@ void meter_increase_multiplier(Meter *meter)
 			/* Reset multi increase progress */
 			if (meter->multiplier < MAX_MULTI)
 				meter->multi_progress = 0;
+			fx_cheer();
 		}
 	}
 }

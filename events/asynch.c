@@ -16,6 +16,7 @@
 */
 
 #include "asynch.h"
+#include "../sound/effects.h"
 
 /* ==== Function: asynch_key_to_pitch ====
 PURPOSE: Converts char value from input key to corresponding int value.
@@ -87,4 +88,5 @@ void asynch_key_hit(Model *model, char key)
 	if (pitch < TARGET_COUNT)
 		model->key_press_buff[pitch] = 1; /* sets the input buffer so that the game state can be updated on the next clock tick. */
 
+	fx_press();
 }

@@ -17,7 +17,6 @@
 */
 
 #include "psg.h"
-#include <osbind.h>
 
 #define NOISE_REG 0x6
 #define SETTINGS_REG 0x7
