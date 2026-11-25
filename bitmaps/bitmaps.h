@@ -29,7 +29,7 @@
 #define BG_HEIGHT 272
 
 extern const UINT32 bg[BG_HEIGHT];
-
+extern const UINT32 bg_alt[BG_HEIGHT];
 
 /*
 =============== ENJOYMENT METER ===============

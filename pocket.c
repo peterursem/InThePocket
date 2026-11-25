@@ -23,8 +23,8 @@
 #include "system/input.h"
 #include "events/events.h"
 #include "song/song.h"
-#include "raster/raster.h"
-#include "bitmaps/bitmaps.h"
+
+#define END_SCREEN_TIME 3 /* End screen linger time in seconds */
 
 void main_init_buffers(UINT32 *buffers[2]);
 void play_game();
@@ -39,11 +39,10 @@ OUTPUT: N/A
 */
 int main()
 {
-	if(display_menu())
+	while(display_menu()) /* Allow for replay after the game */
 		play_game();
 	
 	return 0;
-
 }
 
 /* ==== Function: main_init_buffers ====
@@ -119,6 +118,9 @@ void play_game(){
 
 	render(buffers[0], 0, &model);
 	set_screen(buffers[0]);
+
+	time_now = get_time();
+	while((get_time() - time_now) < (70 * END_SCREEN_TIME)); /* Show end screen for 3 seconds */
 }
 
 /* ==== Function: display_menu ====
@@ -145,7 +147,7 @@ bool display_menu(){
 	render_menu(buffers[0],0);
 	render_menu(buffers[1],0);
 
-        while (!selected)
+    while (!selected)
     {
         if (has_input())
         {

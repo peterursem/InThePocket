@@ -122,15 +122,17 @@ void render_menu(UINT32 *base, UINT8 selected){
 	char * one_player= "1 Player";
 	char * m_exit = "exit";
 
-	clear_screen(base);
-	plot_20l_bitmap(base, 0, bg, BG_HEIGHT);
+	fill_screen(base);
+	plot_20l_bitmap(base, 49, bg_alt, BG_HEIGHT);
+	plot_nxstring(base, 32, 112, "In The Pocket", 2);
+	clear_region(base,333,70,35,275);
+	clear_region(base,333,395,35,175);
 	if(selected!=1){
-			plot_xstring(base, 340, 75, one_player, 2);
+			plot_xstring(base, 338, 75, one_player, 2);
 	}
-	plot_rectangle(base,335,70,35,275);
-	plot_rectangle(base,335,395,35,175);
+	
 	if(selected!=2){
-		plot_xstring(base, 340, 400, m_exit, 2);
+		plot_xstring(base, 338, 423, m_exit, 2);
 	}
 
 }
