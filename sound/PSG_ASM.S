@@ -14,6 +14,9 @@ read_reg	equ		5
 read_val	equ		6
 
 _read_psg:
+		cmpi.b		#15,read_reg(sp)	; Reject register above 15
+		bhi		read_bad
+
 		movea.l		#reg_sel,a0		; Load register select address
 		move.b		read_reg(sp),(a0)	; Set register select number in memory
 
@@ -21,6 +24,10 @@ _read_psg:
 		move.b		(a0),(a1)
 
 		moveq.l		#-1,d0		; Return true for a good read
+		rts
+
+read_bad:
+		moveq.l		#0,d0		; Return false for a bad register
 		rts
 
 ; ==== Function: write_psg ====
@@ -35,9 +42,13 @@ write_reg	equ		5
 write_val	equ		7
 
 _write_psg:
+		cmpi.b		#15,write_reg(sp)	; Reject register above 15
+		bhi		write_done
+
 		movea.l		#reg_sel,a0		; Load register select address
 		move.b		write_reg(sp),(a0)	; Set register select number in memory
 
 		movea.l		#reg_val,a0		; Load value address
 		move.b		write_val(sp),(a0)	; Read value from memory
+write_done:
 		rts

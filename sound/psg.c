@@ -37,7 +37,7 @@ void set_tone(UINT8 channel, UINT16 tuning)
 {
 	UINT8 reg = (1<<channel) & 0x06; /* Values 0, 2, 4 */
 
-	if (channel & 0xFC) return; /* Reject invalid channel */
+	if (channel > 2) return; /* Reject invalid channel */
 	if (tuning & 0xF000) return; /* Reject invalid tuning */
 
 	write_psg(reg, (UINT8)(tuning & 0x00FF)); /* Write fine tone adjustment */
@@ -56,7 +56,7 @@ void set_volume(UINT8 channel, UINT8 volume)
 {
 	UINT8 reg = channel + VOLUME_REG;
 
-	if (channel & 0xFC) return; /* Reject invalid channel */
+	if (channel > 2) return; /* Reject invalid channel */
 	if (volume & 0xE0) return; /* Reject invalid volume */
 
 	write_psg(reg, volume & 0x1F);
@@ -74,7 +74,7 @@ Output: None
 void enable_channel(UINT8 channel, UINT8 tone_on, UINT8 noise_on)
 {
 	UINT8 settings;
-	if (channel & 0xFC) return; /* Reject invalid channel */
+	if (channel > 2) return; /* Reject invalid channel */
 
 	read_psg(SETTINGS_REG, &settings); /* Get contents of settings register */
 
