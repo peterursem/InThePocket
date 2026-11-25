@@ -24,13 +24,13 @@
 
 #define C7          00065
 #define CHEER_DUR   70
-#define MISS_DUR    35
+#define MISS_DUR    7
 #define PRESS_DUR   7
 
 const UINT16 tones[12] = {
-	00326, 00312, 00276, 00264,
-	00252, 00240, 00227, 00217,
-	00207, 00177, 00170, 00161};
+	00226, 00212, 00176, 00164,
+	00152, 00140, 00127, 00117,
+	00107, 00077, 00070, 00061};
 
 static UINT8 cheer_time = 0;
 static UINT8 miss_time = 0;
@@ -51,32 +51,6 @@ void update_fx()
 		{
 			set_volume(2, 0);
 			enable_channel(2, 0, 0);
-		}
-		else
-		{
-			elapsed = CHEER_DUR - cheer_time;
-
-			if (elapsed < 12)
-			{
-				/* Swell up as the crowd erupts */
-				vol = 6 + (elapsed * 9) / 12;
-				noise = 0x1A - (elapsed / 2);
-			}
-			else if (elapsed < 45)
-			{
-				/* Sustained roar and applause texture */
-				vol = (elapsed & 1) ? 13 : 15;
-				noise = (elapsed & 2) ? 0x14 : 0x17;
-			}
-			else
-			{
-				/* Gradual fade-out */
-				vol = (cheer_time * 14) / 25;
-				noise = 0x16 + ((25 - cheer_time) / 8);
-			}
-
-			set_noise(noise);
-			set_volume(2, vol);
 		}
 	}
 	else if (miss_time > 0)
@@ -108,8 +82,9 @@ void fx_cheer()
 {	/* Trigger a crowd cheer sound for each multiplier up */
 	long exit_ssp = Super(0);
 	enable_channel(2, 0, 1);
-	set_noise(0x1A);
-	set_volume(2, 6);
+	set_noise(0x1F);
+	set_volume(2, 37);
+	set_envelope(0x9, 0xFFFF);
 
 	cheer_time = CHEER_DUR;
 	miss_time = 0;
@@ -121,10 +96,11 @@ void fx_miss()
 {	/* Trigger a buzzer or off key note for a missed note */
 	UINT16 tone = tones[get_time() % 12];
 	long exit_ssp = Super(0);
+
 	set_tone(2, tone);
 	enable_channel(2, 1, 0);
 	set_volume(2, 0x1F);
-	set_envelope(0x9, 0x0FFF);
+	set_envelope(0xA, 0x000F);
 
 	miss_time = MISS_DUR;
 	cheer_time = 0;
@@ -141,10 +117,10 @@ void fx_press()
 
 	exit_ssp = Super(0);
 
-	set_noise(0x10);
+	set_noise(0x1F);
 	enable_channel(2, 0, 1);
 	set_volume(2, 0x1F);
-	set_envelope(0x9, 0x0400);
+	set_envelope(0x0, 0x07FF);
 
 	press_time = PRESS_DUR;
 	miss_time = 0;
