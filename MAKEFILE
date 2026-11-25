@@ -46,10 +46,13 @@ build\synch.o: events\synch.c events\synch.h events\events.h build\model.o types
 
 # ==== BITMAPS ====
 # No ext dependencies
-BITMAPS =	bitmaps\bitmaps.o build\targets.o
+BITMAPS =	bitmaps\bitmaps.o bitmaps\bitmaps1.o build\targets.o
 
 bitmaps\bitmaps.o: bitmaps\bitmaps.s
 	gen -D -L2 bitmaps\bitmaps.s
+
+bitmaps\bitmaps1.o: bitmaps\bitmaps1.s
+	gen -D -L2 bitmaps\bitmaps1.s
 
 build\targets.o: bitmaps\targets.c bitmaps\bitmaps.h types.h
 	cc68x -g -c bitmaps\targets.c -o build\targets.o
