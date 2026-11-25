@@ -115,7 +115,7 @@ Output: None
 void music_update_regs(UINT16 mod) {
 	UINT8 reg = 0; /* Register # being written to in mod loop */
 
-	mod &= 0x3FFF /* Ignore top 2 bits */
+	mod &= 0x3FFF; /* Ignore top 2 bits */
 
 	while (mod)
 	{
