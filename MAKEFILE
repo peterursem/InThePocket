@@ -1,13 +1,14 @@
 # ==== Keywords ====
 
 game: pocket.tos
-tests: model render raster input music sound
+tests: model render raster input music sound effects
 model: tstmodel.tos
 render: tstrend.tos
 raster: tstrast.tos
 input: tstinput.tos
 music: music.tos
 sound: psg.tos
+effects: fx.tos
 
 # ==== SYSTEM CALLS ====
 # No ext dependencies
@@ -135,6 +136,12 @@ build\musictst.o: sound\tests\musictst.c sound\music.h
 
 music.tos: $(SOUND) $(MUSIC) build\musictst.o
 	cc68x -g $(SOUND) $(MUSIC) build\musictst.o -o music.tos
+
+build\fxtst.o: sound\tests\fxtst.c sound\effects.h sound\psg.h
+	cc68x -g -c sound\tests\fxtst.c -o build\fxtst.o
+
+fx.tos: $(SOUND) $(SYSTEM) build\fxtst.o
+	cc68x -g build\fxtst.o $(SOUND) $(SYSTEM) -o fx.tos
 
 # ==== MODEL/EVENT TESTS ====
 tstinput.tos:  build\input.o build\tstinput.o
