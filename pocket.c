@@ -23,6 +23,9 @@
 #include "system/input.h"
 #include "events/events.h"
 #include "song/song.h"
+#include "sound/music.h"
+#include "sound/track.h"
+#include "sound/effects.h"
 
 #define END_SCREEN_TIME 3 /* End screen linger time in seconds */
 
@@ -94,6 +97,8 @@ void play_game(){
 	set_screen(buffers[0]);
 	time_flip = time_then+1;
 
+	init_music(track);
+
 	quit = false;
 	while (!quit)
 	{
@@ -109,6 +114,8 @@ void play_game(){
 			cond_check_key_buffer(&model); /* Apply key hit/misses */
 			cond_check_misses(&model); /* Apply passed note misses */
 			quit = cond_game_over(&model);
+			update_fx(model.last_interval);
+			update_music(model.last_interval);
 
 			set_screen(buffers[buffer]); /* Show previous back buffer */
 			buffer = 1 - buffer; /* Swap back buffer index */
@@ -124,6 +131,7 @@ void play_game(){
 		}
 	}
 
+	stop_music();
 	render(buffers[0], 0, &model);
 	set_screen(buffers[0]);
 

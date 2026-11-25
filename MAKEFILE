@@ -1,12 +1,13 @@
 # ==== Keywords ====
 
 game: pocket.tos
-all: model render raster
+tests: model render raster input music sound
 model: tstmodel.tos
 render: tstrend.tos
 raster: tstrast.tos
-live: tstlive.tos
 input: tstinput.tos
+music: music.tos
+sound: psg.tos
 
 # ==== SYSTEM CALLS ====
 # No ext dependencies
@@ -92,14 +93,48 @@ SONG = build\song.o
 build\song.o: song\song.c song\song.h
 	cc68x -g -c song\song.c -o build\song.o
 
+# ==== SOUND OBJECTS ====
+SOUND =	build\psg.o sound\psg_asm.o build\effects.o
+
+build\psg.o: sound\psg.c sound\psg.h
+	cc68x -g -c sound\psg.c -o build\psg.o
+
+sound\psg_asm.o: sound\psg_asm.s sound\psg.h
+	gen -D -L2 sound\psg_asm.s
+
+build\effects.o: sound\effects.c sound\effects.h
+	cc68x -g -c sound\effects.c -o build\effects.o
+
+# ==== MUSIC OBJECTS ====
+MUSIC = build\music.o build\track.o
+
+build\music.o: sound\music.c sound\music.h
+	cc68x -g -c sound\music.c -o build\music.o
+
+build\track.o: sound\track.c sound\track.h
+	cc68x -g -c sound\track.c -o build\track.o
+
 # ==== GAME MODULE ====
 # Builds all objects (except tests)
 
-pocket.tos: build\pocket.o $(MODEL) $(EVENTS) $(RASTER) $(BITMAPS) $(RENDER) $(SYSTEM) $(SONG)
-	cc68x -g build\pocket.o $(MODEL) $(EVENTS) $(RASTER) $(BITMAPS) $(RENDER) $(SYSTEM) $(SONG) -o pocket.tos
+pocket.tos: build\pocket.o $(MODEL) $(EVENTS) $(RASTER) $(BITMAPS) $(RENDER) $(SYSTEM) $(SONG) $(SOUND) $(MUSIC)
+	cc68x -g build\pocket.o $(MODEL) $(EVENTS) $(RASTER) $(BITMAPS) $(RENDER) $(SYSTEM) $(SONG) $(SOUND) $(MUSIC) -o pocket.tos
 
 build\pocket.o: pocket.c
 	cc68x -g -c pocket.c -o build\pocket.o
+
+# ==== SOUND TESTS ====
+build\psgtst.o: sound\tests\psgtst.c sound\psg.h
+	cc68x -g -c sound\tests\psgtst.c -o build\psgtst.o
+
+psg.tos: $(SOUND) $(SYSTEM) build\psgtst.o
+	cc68x -g build\psgtst.o $(SOUND) $(SYSTEM) -o psg.tos
+
+build\musictst.o: sound\tests\musictst.c sound\music.h
+	cc68x -g -c sound\tests\musictst.c -o build\musictst.o
+
+music.tos: $(SOUND) $(MUSIC) build\musictst.o
+	cc68x -g $(SOUND) $(MUSIC) build\musictst.o -o music.tos
 
 # ==== MODEL/EVENT TESTS ====
 tstinput.tos:  build\input.o build\tstinput.o
