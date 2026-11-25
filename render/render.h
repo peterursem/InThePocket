@@ -132,6 +132,15 @@ OUTPUT: N/A
 */
 void render_end_screen(UINT32 *base, char *t1, UINT16 t1_len, char *t2, UINT16 t2_len, UINT32 score);
 
+/* ==== Function: render_end_screen ====
+PURPOSE: Renders a splash screen with all the game credits.
+
+INPUT: base(UINT32 *): Pointer to frame buffer
+
+OUTPUT: N/A
+*/
+void render_credit_splash(UINT32 *base);
+
 /* ==== Function: render_int_to_string ====
 PURPOSE: Converts an int value to a string and writes it to the given char array
 
