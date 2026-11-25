@@ -29,17 +29,6 @@
 
 #define END_SCREEN_TIME 3 /* End screen linger time in seconds */
 
-#define SCAN_LEFT	75
-#define SCAN_A		30
-
-#define SCAN_RIGHT	77
-#define SCAN_D		32
-
-#define SCAN_RETURN	28
-#define SCAN_SPACE	57
-#define SCAN_ENTER	114
-
-
 void main_init_buffers(UINT32 *buffers[2]);
 void play_game();
 bool display_menu();
@@ -121,7 +110,7 @@ void play_game(UINT32 *buffers[2], UINT8 *buffer){
 		time_now = get_time();
 
 		if (has_input())
-			asynch_key_hit(&model, get_ascii_input());
+			asynch_key_hit(&model, get_scan_input());
 			
 		if (!render_ready && (time_now > time_then))
 		{

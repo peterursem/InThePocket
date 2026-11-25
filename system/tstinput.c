@@ -22,6 +22,10 @@ int main(void)
 {
     while(!has_input)
         ;
-    printf("Input: %c\n", get_ascii_input());
+    printf("Input ascii: %c\n", get_ascii_input());
+
+	while(!has_input)
+        ;
+    printf("Input scan: %d\n", get_scan_input());
     return 0;
 }

@@ -19,6 +19,20 @@
 
 #include "../types.h"
 
+#define SCAN_ESC	1
+
+#define SCAN_A		30
+#define SCAN_S		31
+#define SCAN_D		32
+#define SCAN_F		33
+
+#define SCAN_LEFT	75
+#define SCAN_RIGHT	77
+
+#define SCAN_RETURN	28
+#define SCAN_SPACE	57
+#define SCAN_ENTER	114
+
 /* ==== Function: has_input ====
 
 PURPOSE: Check wether an input is waiting in the buffer.

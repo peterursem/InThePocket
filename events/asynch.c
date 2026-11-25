@@ -17,11 +17,12 @@
 
 #include "asynch.h"
 #include "../sound/effects.h"
+#include "../system/input.h"
 
 /* ==== Function: asynch_key_to_pitch ====
 PURPOSE: Converts char value from input key to corresponding int value.
 
-INPUT: Char value of keyboard press
+INPUT: Scancode value of keyboard press
 
 OUTPUT: UINT8 of corresponding key press to the "pitch" of the note.
 */
@@ -30,28 +31,23 @@ UINT8 asynch_key_to_pitch(char key)
 	UINT8 pitch;
 	switch (key)
 	{
-	case 'a':
-	case 'A':
+	case SCAN_A:
 		pitch = KEY_A;
 		break;
 
-	case 's':
-	case 'S':
+	case SCAN_S:
 		pitch = KEY_S;
 		break;
 
-	case 'd':
-	case 'D':
+	case SCAN_D:
 		pitch = KEY_D;
 		break;
 
-	case 'f':
-	case 'F':
+	case SCAN_F:
 		pitch = KEY_F;
 		break;
 
-	case '`':
-	case '~':
+	case SCAN_ESC:
 		pitch = -2;
 		break;
 
@@ -66,7 +62,7 @@ UINT8 asynch_key_to_pitch(char key)
 /* ==== Function: asynch_key_hit ====
 PURPOSE: checks to see if input buffer must be set and then sets it
 
-INPUT: Key pressed (char) and pointer to model
+INPUT: Scancode for the key pressed (char) and pointer to model
 
 OUTPUT: N/A	
 */
