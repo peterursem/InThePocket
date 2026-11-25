@@ -33,7 +33,7 @@ bool has_input()
 	return (bool)Cconis();
 }
 
-/* ==== Function: get_input ====
+/* ==== Function: get_ascii_input ====
 
 PURPOSE: Read an input from the input buffer.
 
@@ -41,7 +41,20 @@ INPUT: N/A
 
 OUTPUT: (UINT8) ASCII input code from buffer.
 */
-UINT8 get_input()
+UINT8 get_ascii_input()
 {
-	return (UINT8)(Cnecin() & 0x000000FF);
+	return (UINT8)(Cnecin() & 0xFF);
+}
+
+/* ==== Function: get_scan_input ====
+
+PURPOSE: Read an input from the input buffer.
+
+INPUT: N/A
+
+OUTPUT: (UINT8) Scancode for input from buffer.
+*/
+UINT8 get_scan_input()
+{
+	return (UINT8)((Cnecin() >> 16) & 0xFF);
 }

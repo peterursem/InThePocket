@@ -29,7 +29,7 @@ OUTPUT: (bool) Is there an input waiting in the buffer?
 */
 bool has_input();
 
-/* ==== Function: get_input ====
+/* ==== Function: get_ascii_input ====
 
 PURPOSE: Read an input from the input buffer.
 
@@ -37,4 +37,14 @@ INPUT: N/A
 
 OUTPUT: (UINT8) ASCII input code from buffer.
 */
-UINT8 get_input();
+UINT8 get_ascii_input();
+
+/* ==== Function: get_scan_input ====
+
+PURPOSE: Read an input from the input buffer.
+
+INPUT: N/A
+
+OUTPUT: (UINT8) Scancode for input from buffer.
+*/
+UINT8 get_scan_input();

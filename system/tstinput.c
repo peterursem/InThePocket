@@ -22,6 +22,6 @@ int main(void)
 {
     while(!has_input)
         ;
-    printf("Input: %c\n", get_input());
+    printf("Input: %c\n", get_ascii_input());
     return 0;
 }
