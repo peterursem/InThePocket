@@ -78,7 +78,7 @@ void cond_check_key_buffer(Model *model){
 				meter_apply_hit(&model->meter);
 				
 				if (model->meter.multiplier > multi)
-					fx_cheer();
+					fx_multi();
 
 				if(model->notes[model->head].hit)
 					model_advance_head(model);
