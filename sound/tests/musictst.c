@@ -38,7 +38,7 @@ int main()
 
     while(!Cconis()) {
         update_music(frames);
-        frames = /*(rand() & 3) +*/ 1;
+        frames = (rand() & 3) + 1;
         sync_wait(frames);
     }
 
