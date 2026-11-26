@@ -27,12 +27,12 @@
 #include "sound/track.h"
 #include "sound/effects.h"
 
-#define CREDIT_SCREEN_TIME 3 /* End screen linger time in seconds */
+#define CREDIT_SCREEN_TIME 3 /* Credit screen linger time in seconds */
 #define END_SCREEN_TIME 3 /* End screen linger time in seconds */
 
 void main_init_buffers(UINT32 *buffers[2]);
-void play_game();
-bool display_menu();
+void play_game(UINT32 *buffers[2], UINT8 *buffer);
+bool display_menu(UINT32 *buffers[2], UINT8 *buffer);
 
 /* ==== Function: main ====
 PURPOSE: Main game setup and loop
