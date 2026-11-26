@@ -27,6 +27,7 @@
 #include "sound/track.h"
 #include "sound/effects.h"
 
+#define CREDIT_SCREEN_TIME 3 /* End screen linger time in seconds */
 #define END_SCREEN_TIME 3 /* End screen linger time in seconds */
 
 void main_init_buffers(UINT32 *buffers[2]);
@@ -78,7 +79,6 @@ INPUT: N/A
 
 OUTPUT: N/A
 */
-
 void play_game(UINT32 *buffers[2], UINT8 *buffer){
 
 	UINT32 time_then, time_now, time_flip;
@@ -86,14 +86,6 @@ void play_game(UINT32 *buffers[2], UINT8 *buffer){
 
 	bool quit = false;
 	bool render_ready = false;
-
-	time_now = get_time();
-
-	render_credit_splash(buffers[*buffer]);
-	set_screen(buffers[*buffer]);
-	*buffer = 1 - *buffer; /* Swap back buffer index */
-
-	while(get_time() < time_now + 210);
 
 	time_then = get_time();
 	model_init(&model, song, SONG_NOTES, time_then);
@@ -199,6 +191,14 @@ bool display_menu(UINT32 *buffers[2], UINT8 *buffer){
             time_then = time_now;
         }
     }
+
+	if (play)
+	{	/* Show pre-game credits */
+		render_credit_splash(buffers[*buffer]);
+		set_screen(buffers[*buffer]);
+		*buffer = 1 - *buffer; /* Swap back buffer index */
+		while(get_time() < (time_now + CREDIT_SCREEN_TIME * 70));
+	}
 	
     return play;
 }
