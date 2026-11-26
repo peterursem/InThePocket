@@ -16,8 +16,8 @@
 	sound/musictst.c
 */
 
-#include "music.h"
-#include "track.h"
+#include "../music.h"
+#include "../track.h"
 #include <osbind.h>
 #include <stdlib.h>
 

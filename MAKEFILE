@@ -134,8 +134,8 @@ psg.tos: $(SOUND) $(SYSTEM) build\psgtst.o
 build\musictst.o: sound\tests\musictst.c sound\music.h
 	cc68x -g -c sound\tests\musictst.c -o build\musictst.o
 
-music.tos: $(SOUND) $(MUSIC) build\musictst.o
-	cc68x -g $(SOUND) $(MUSIC) build\musictst.o -o music.tos
+music.tos: $(SOUND) $(MUSIC) $(SYSTEM) build\musictst.o
+	cc68x -g $(SOUND) $(MUSIC) $(SYSTEM) build\musictst.o -o music.tos
 
 build\fxtst.o: sound\tests\fxtst.c sound\effects.h sound\psg.h
 	cc68x -g -c sound\tests\fxtst.c -o build\fxtst.o
@@ -150,15 +150,15 @@ tstinput.tos:  build\input.o build\tstinput.o
 build\tstinput.o: system\tstinput.c
 	cc68x -g -c system\tstinput.c -o build\tstinput.o
 
-tstmodel.tos: $(EVENTS) $(MODEL) build\tstmodel.o
-	cc68x -g $(EVENTS) $(MODEL) build\tstmodel.o -o tstmodel.tos
+tstmodel.tos: $(EVENTS) $(MODEL) $(SOUND) $(SYSTEM) build\tstmodel.o
+	cc68x -g $(EVENTS) $(MODEL) $(SOUND) $(SYSTEM) build\tstmodel.o -o tstmodel.tos
 
 build\tstmodel.o: model\tstmodel.c $(EVENTS_H) $(MODEL_H) types.h
 	cc68x -g -c model\tstmodel.c -o build\tstmodel.o
 
 # ==== RENDER TESTS ====
-tstrend.tos: build\tstrend.o build\render.o $(BITMAPS) $(EVENTS) $(MODEL) $(RASTER)
-	cc68x -g build\tstrend.o build\render.o $(BITMAPS) $(EVENTS) $(MODEL) $(RASTER) -o tstrend.tos
+tstrend.tos: build\tstrend.o build\render.o $(BITMAPS) $(EVENTS) $(MODEL) $(RASTER) $(SOUND) $(SYSTEM)
+	cc68x -g build\tstrend.o build\render.o $(BITMAPS) $(EVENTS) $(MODEL) $(RASTER) $(SOUND) $(SYSTEM) -o tstrend.tos
 
 build\tstrend.o: render\tstrend.c render\render.h raster\raster.h $(EVENTS_H) $(MODEL_H) types.h
 	cc68x -g -c render\tstrend.c -o build\tstrend.o
