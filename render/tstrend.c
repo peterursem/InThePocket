@@ -20,6 +20,7 @@
 */
 
 #include "render.h"
+#include "../sound/psg.h"
 #include "../events/events.h"
 #include "../raster/raster.h"
 #include <osbind.h>
@@ -49,6 +50,7 @@ void test_apply_miss(Model *model, UINT32 *base);
 
 int main(void)
 {
+	long exit_ssp;
 	UINT32 *base = (UINT32 *)Physbase();
 	static Model test_model;
 
@@ -63,6 +65,9 @@ int main(void)
 	test_apply_hit(&test_model, base);
 	test_apply_miss(&test_model, base);
 
+	exit_ssp = Super(0);
+	stop_sound();
+	Super(exit_ssp);
 	return 0;
 }
 
@@ -89,6 +94,10 @@ OUTPUT: N/A
 */
 void show_frame(Model *model, UINT32 *base)
 {
+	long exit_ssp = Super(0);
+	stop_sound();
+	Super(exit_ssp);
+
 	model->new_bg = 1;
 	model->meter.dirty = 1;
 	render(base, 0, model);

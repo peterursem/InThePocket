@@ -16,6 +16,8 @@
 */
 
 #include "../events/events.h"
+#include "../sound/psg.h"
+
 #include <osbind.h>
 #include <stdio.h>
 static const Note test_song[] = {
@@ -354,17 +356,23 @@ int main(void)
 
 void print_note(const Note *note)
 {
+	long exit_ssp = Super(0);
+	stop_sound();
+	Super(exit_ssp);
 	printf("time = %lu, pitch = %d \n", note->time, note->pitch);
 }
 
 void print_meter(const Meter *meter)
 {
+	long exit_ssp = Super(0);
+	stop_sound();
+	Super(exit_ssp);
 	printf("enjoyment =  %d, multiplier = %d, score = %lu \n", meter->enjoyment, meter->multiplier, meter->score);
 }
 
 void print_model(const Model *model)
 {
-
+	long exit_ssp;
 	UINT16 i;
 
 	printf("clock = %lu, note count = %d, head = %d , last on screen = %d \n",
@@ -379,4 +387,8 @@ void print_model(const Model *model)
 		printf("note %d : ", i);
 		print_note(&model->notes[i]);
 	}
+	
+	exit_ssp = Super(0);
+	stop_sound();
+	Super(exit_ssp);
 }
