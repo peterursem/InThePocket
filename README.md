@@ -27,7 +27,7 @@ With 0 enjoyment, the Doug will be booed off stage and the level will end.
   </tr>
   <tr>
     <td><img src="https://github.com/lcamp702/InThePocket/blob/media/screenshots/Game1.png"></td>
-    <td><img src="https://github.com/lcamp702/InThePocket/blob/media/screenshots/Game3.png"><</td>
+    <td><img src="https://github.com/lcamp702/InThePocket/blob/media/screenshots/Game3.png"></td>
   </tr>
   <tr>
     <td><img src="https://github.com/lcamp702/InThePocket/blob/media/screenshots/Win.png"></td>
