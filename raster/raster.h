@@ -241,4 +241,10 @@ void plot_nstring(UINT8 *base, int row, int col, char *ch);
 void plot_xstring(UINT32 *base, int row, int col, char *ch, UINT8 size);
 void plot_nxstring(UINT32 *base, int row, int col, char *ch, UINT8 size);
 
+/*replaces physbase*/
+UINT16 *get_video_base();
+
+/*replaces setscreen*/
+void set_video_base(UINT16 *);
+
 #endif
